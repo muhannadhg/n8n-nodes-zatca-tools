@@ -1,0 +1,41 @@
+name: Publish to npm
+
+# n8n will not verify a node published from a laptop: since 1 May 2026 a
+# verified package must carry an npm PROVENANCE statement, which only a trusted
+# CI publisher can produce. `id-token: write` is what lets npm attest that this
+# tarball was built from this commit, in this repository.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
+      # --ignore-scripts: n8n-workflow drags in isolated-vm, a native addon that
+      # fails to compile against Node 20's V8 headers. We only ever use
+      # n8n-workflow for its TYPES, so nothing here needs it built — and not
+      # running install scripts in a publishing job is the safer default anyway.
+      - run: npm ci --ignore-scripts
+
+      # The same gates that run locally — a release never skips them.
+      - run: npm run lint
+      - run: npm run build
+
+      - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
