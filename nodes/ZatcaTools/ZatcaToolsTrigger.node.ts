@@ -24,7 +24,7 @@ export class ZatcaToolsTrigger implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'ZATCA Tools Trigger',
 		name: 'zatcaToolsTrigger',
-		icon: { light: 'file:zatcatools.png', dark: 'file:zatcatools.png' },
+		icon: { light: 'file:zatcatools.png', dark: 'file:zatcatools.dark.png' },
 		group: ['trigger'],
 		version: 1,
 		subtitle: '={{$parameter["event"]}}',

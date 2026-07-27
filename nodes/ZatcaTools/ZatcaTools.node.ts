@@ -19,7 +19,7 @@ export class ZatcaTools implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'ZATCA Tools',
 		name: 'zatcaTools',
-		icon: { light: 'file:zatcatools.png', dark: 'file:zatcatools.png' },
+		icon: { light: 'file:zatcatools.png', dark: 'file:zatcatools.dark.png' },
 		group: ['output'],
 		version: 1,
 		// Exposed to AI agents as a tool: issuing an invoice is a well-defined

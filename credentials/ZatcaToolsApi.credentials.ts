@@ -11,7 +11,7 @@ export class ZatcaToolsApi implements ICredentialType {
 
 	displayName = 'ZATCA Tools API';
 
-	icon: Icon = { light: 'file:zatcatools.png', dark: 'file:zatcatools.png' };
+	icon: Icon = { light: 'file:zatcatools.png', dark: 'file:zatcatools.dark.png' };
 
 	// eslint-disable-next-line n8n-nodes-base/cred-class-field-documentation-url-miscased -- the linter's camelCase fix turns this into an identifier, and its own next rule then demands a URL.
 	documentationUrl = 'https://zatcatools.com/docs/api';

@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-zatca-tools",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Issue Saudi ZATCA Phase 2 e-invoices (signed, QR, reported) from any n8n workflow.",
   "keywords": [
     "n8n-community-node-package",
