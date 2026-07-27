@@ -25,6 +25,14 @@ module.exports = {
 			files: ['./nodes/**/*.ts'],
 			plugins: ['eslint-plugin-n8n-nodes-base'],
 			extends: ['plugin:n8n-nodes-base/nodes'],
+			rules: {
+				// This older plugin rewrites inputs/outputs to the string literal
+				// 'main'; n8n's VERIFICATION scanner (@n8n/community-nodes) rejects
+				// exactly that and requires NodeConnectionTypes.Main. The scanner is
+				// the gate that matters, so these two are off.
+				'n8n-nodes-base/node-class-description-inputs-wrong-regular-node': 'off',
+				'n8n-nodes-base/node-class-description-outputs-wrong': 'off',
+			},
 		},
 	],
 };

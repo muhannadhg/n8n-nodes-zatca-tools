@@ -6,7 +6,7 @@ import type {
 	INodeExecutionData,
 	JsonObject,
 } from 'n8n-workflow';
-import { NodeApiError } from 'n8n-workflow';
+import { NodeApiError, NodeConnectionTypes } from 'n8n-workflow';
 
 /**
  * Fires when a document is issued.
@@ -24,15 +24,16 @@ export class ZatcaToolsTrigger implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'ZATCA Tools Trigger',
 		name: 'zatcaToolsTrigger',
-		icon: 'file:zatcatools.svg',
+		icon: { light: 'file:zatcatools.png', dark: 'file:zatcatools.png' },
 		group: ['trigger'],
 		version: 1,
 		subtitle: '={{$parameter["event"]}}',
 		description: 'Starts a workflow when an e-invoice or note is issued',
 		defaults: { name: 'ZATCA Tools Trigger' },
+		usableAsTool: true,
 		polling: true,
 		inputs: [],
-		outputs: ['main'],
+		outputs: [NodeConnectionTypes.Main],
 		credentials: [{ name: 'zatcaToolsApi', required: true }],
 		properties: [
 			{

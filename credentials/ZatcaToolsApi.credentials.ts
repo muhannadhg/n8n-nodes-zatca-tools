@@ -3,12 +3,15 @@ import type {
 	ICredentialTestRequest,
 	ICredentialType,
 	INodeProperties,
+	Icon,
 } from 'n8n-workflow';
 
 export class ZatcaToolsApi implements ICredentialType {
 	name = 'zatcaToolsApi';
 
 	displayName = 'ZATCA Tools API';
+
+	icon: Icon = { light: 'file:zatcatools.png', dark: 'file:zatcatools.png' };
 
 	// eslint-disable-next-line n8n-nodes-base/cred-class-field-documentation-url-miscased -- the linter's camelCase fix turns this into an identifier, and its own next rule then demands a URL.
 	documentationUrl = 'https://zatcatools.com/docs/api';
