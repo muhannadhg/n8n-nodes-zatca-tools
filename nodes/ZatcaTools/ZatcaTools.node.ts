@@ -19,7 +19,7 @@ export class ZatcaTools implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'ZATCA Tools',
 		name: 'zatcaTools',
-		icon: { light: 'file:zatcatools.png', dark: 'file:zatcatools.dark.png' },
+		icon: { light: 'file:zatcatools.svg', dark: 'file:zatcatools.dark.svg' },
 		group: ['output'],
 		version: 1,
 		// Exposed to AI agents as a tool: issuing an invoice is a well-defined
@@ -192,7 +192,7 @@ export class ZatcaTools implements INodeType {
 						default: '',
 						placeholder: 'RRRD2929',
 						description:
-							'العنوان الوطني — 4 letters + 4 digits. The street, building number, city and postal code a tax invoice needs are resolved from it.',
+							'4 letters + 4 digits. The street, building number, city and postal code a tax invoice needs are resolved from it.',
 						routing: { send: { type: 'body', property: 'customer.short_address' } },
 					},
 					{
