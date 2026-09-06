@@ -35,11 +35,21 @@ The first run records where it is and emits nothing. Without that, switching a w
 
 ## Credentials
 
-1. Create a free account at [zatcatools.com](https://zatcatools.com) and connect it to ZATCA.
+1. Create a free account at [zatcatools.com](https://zatcatools.com/start?utm_source=github&utm_medium=readme&utm_campaign=n8n) and connect it to ZATCA (or start in trial mode).
 2. Settings → API → copy the key (`ztk_live_…`).
 3. In n8n, add a **ZATCA Tools API** credential and paste it.
 
 The credential test calls `GET /account`, so a wrong key fails immediately rather than at the first invoice.
+
+## Common questions
+
+**Do I need ZATCA credentials to try this?** No. A free ZATCA Tools account has a trial mode that onboards against ZATCA's own developer sandbox (test VAT `399999999900003`, fixed OTP `123345`), so the node issues real signed, reported test invoices before you touch production. How the sandbox works: [sandbox quickstart](https://github.com/muhannadhg/zatca-tools-examples/blob/main/docs/zatca-sandbox-quickstart.md).
+
+**What does the node not do?** It never builds XML, signs, or talks to ZATCA itself — the service does (UBL 2.1, XAdES signature, ICV/PIH chain, TLV QR, reporting/clearance). Your workflow sends invoice JSON and gets back the status, QR, XML and PDF.
+
+**Can one workflow invoice for several establishments?** One credential = one establishment (one certificate, one invoice chain). Use one credential per establishment, or the [Partner API](https://zatcatools.com/docs/partner-api?utm_source=github&utm_medium=readme&utm_campaign=n8n) if you run a platform that invoices on behalf of many merchants.
+
+**An invoice came back rejected — where do I look?** The response carries the ZATCA rule code (`BR-KSA-…`). One-line fixes for the common ones: [rejection codes cheat sheet](https://github.com/muhannadhg/zatca-tools-examples/blob/main/docs/zatca-error-codes-cheatsheet.md).
 
 ## Two things worth knowing
 
