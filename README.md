@@ -51,6 +51,12 @@ The credential test calls `GET /account`, so a wrong key fails immediately rathe
 
 **An invoice came back rejected — where do I look?** The response carries the ZATCA rule code (`BR-KSA-…`). One-line fixes for the common ones: [rejection codes cheat sheet](https://github.com/muhannadhg/zatca-tools-examples/blob/main/docs/zatca-error-codes-cheatsheet.md).
 
+## VAT per line (1.1.0)
+
+Each invoice line can carry its own **VAT Treatment**: Standard Rate (15%), Zero-Rated (0%), Exempt or Out of Scope. Left on *Establishment Default*, it takes your establishment's own treatment, as every line did before 1.1.0. A zero-rated or exempt line may name its **Exemption Reason** (ZATCA's `VATEX-SA-…` list). The reason is optional: left empty, the line takes the reason its sibling lines name, else the one your establishment used last, else none, which ZATCA accepts with a warning. One invoice can mix treatments, for example a taxed haircut beside a tip that is out of scope.
+
+Turn on **Prices Include VAT** under Additional Fields to send what the customer pays. Each line's VAT is then taken out at its own rate.
+
 ## Two things worth knowing
 
 **Set `External ID`.** It is your own id for the sale (`order-5501`). Send it again — after a retry, a duplicated run, a re-activated workflow — and you get the *same* invoice back instead of a second one. An e-invoice cannot be deleted once ZATCA has accepted it, so this is the difference between a mistake and a permanent one.

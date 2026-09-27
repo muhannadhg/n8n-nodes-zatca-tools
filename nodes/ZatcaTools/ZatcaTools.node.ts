@@ -131,16 +131,124 @@ export class ZatcaTools implements INodeType {
 						name: 'line',
 						displayName: 'Line',
 						values: [
-							{ displayName: 'Name', name: 'name', type: 'string', default: '' },
-							{ displayName: 'Quantity', name: 'quantity', type: 'number', default: 1 },
 							{
-								displayName: 'Unit Price',
-								name: 'unit_price',
-								type: 'number',
-								default: 0,
-								description: 'NET of VAT — the 15% is added for you',
+						displayName: 'Exemption Reason',
+						name: 'tax_reason_code',
+						type: 'options',
+						options: [
+									{
+										name: 'Exempt: Financial Services (VATEX-SA-29)',
+										value: 'VATEX-SA-29',
+									},
+									{
+										name: 'Exempt: Life Insurance (VATEX-SA-29-7)',
+										value: 'VATEX-SA-29-7',
+									},
+									{
+										name: 'Exempt: Real Estate Transactions (VATEX-SA-30)',
+										value: 'VATEX-SA-30',
+									},
+									{
+										name: 'None',
+										value: '',
+									},
+									{
+										name: 'Zero-Rated: Export of Goods (VATEX-SA-32)',
+										value: 'VATEX-SA-32',
+									},
+									{
+										name: 'Zero-Rated: Export of Services (VATEX-SA-33)',
+										value: 'VATEX-SA-33',
+									},
+									{
+										name: 'Zero-Rated: International Transport of Goods (VATEX-SA-34-1)',
+										value: 'VATEX-SA-34-1',
+									},
+									{
+										name: 'Zero-Rated: International Transport of Passengers (VATEX-SA-34-2)',
+										value: 'VATEX-SA-34-2',
+									},
+									{
+										name: 'Zero-Rated: Medicines and Medical Equipment (VATEX-SA-35)',
+										value: 'VATEX-SA-35',
+									},
+									{
+										name: 'Zero-Rated: Private Education to Citizen (VATEX-SA-EDU)',
+										value: 'VATEX-SA-EDU',
+									},
+									{
+										name: 'Zero-Rated: Private Healthcare to Citizen (VATEX-SA-HEA)',
+										value: 'VATEX-SA-HEA',
+									},
+									{
+										name: 'Zero-Rated: Qualifying Metals (VATEX-SA-36)',
+										value: 'VATEX-SA-36',
+									},
+									{
+										name: 'Zero-Rated: Services Connected to International Passenger Transport (VATEX-SA-34-3)',
+										value: 'VATEX-SA-34-3',
+									},
+									{
+										name: 'Zero-Rated: Services Relating to Goods or Passenger Transportation (VATEX-SA-34-5)',
+										value: 'VATEX-SA-34-5',
+									},
+									{
+										name: 'Zero-Rated: Supply of a Qualifying Means of Transport (VATEX-SA-34-4)',
+										value: 'VATEX-SA-34-4',
+									},
+								],
+						default: '',
+						description: 'Optional, for a Zero-Rated or Exempt line, and it must belong to that treatment. Left empty, the line takes the reason the other lines of its treatment name on this invoice, else the one this establishment used last, else none (ZATCA accepts with a warning). Out of Scope always carries VATEX-SA-OOS.',
 							},
-						],
+							{
+						displayName: 'Name',
+						name: 'name',
+						type: 'string',
+						default: '',
+							},
+							{
+						displayName: 'Quantity',
+						name: 'quantity',
+						type: 'number',
+						default: 1
+							},
+							{
+						displayName: 'Unit Price',
+						name: 'unit_price',
+						type: 'number',
+						default: 0,
+						description: 'Net of VAT, and the 15 percent is added for you. Turn on Prices Include VAT under Additional Fields to send what the customer pays.',
+							},
+							{
+						displayName: 'VAT Treatment',
+						name: 'tax_category',
+						type: 'options',
+						options: [
+									{
+										name: 'Establishment Default',
+										value: '',
+									},
+									{
+										name: 'Exempt',
+										value: 'E',
+									},
+									{
+										name: 'Out of Scope',
+										value: 'O',
+									},
+									{
+										name: 'Standard Rate (15%)',
+										value: 'S',
+									},
+									{
+										name: 'Zero-Rated (0%)',
+										value: 'Z',
+									},
+					],
+						default: '',
+						description: 'How ZATCA treats this line. Lines of one invoice may differ, such as a taxed service beside a tip that is out of scope.',
+							},
+					],
 					},
 				],
 				routing: { send: { type: 'body', property: 'lines', value: '={{$value.line}}' } },
@@ -219,6 +327,15 @@ export class ZatcaTools implements INodeType {
 						placeholder: 'YYYY-MM-DD',
 						description: 'Defaults to today. Dated in Saudi time.',
 						routing: { send: { type: 'body', property: 'issue_date' } },
+					},
+					{
+						displayName: 'Prices Include VAT',
+						name: 'prices_include_vat',
+						type: 'boolean',
+						default: false,
+						description:
+							'Whether the unit prices (and the discount) are what the customer pays, VAT included — each line’s VAT is then taken out at its own rate',
+						routing: { send: { type: 'body', property: 'prices_include_vat' } },
 					},
 				],
 			},
