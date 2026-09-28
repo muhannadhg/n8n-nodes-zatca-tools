@@ -30,7 +30,6 @@ export class ZatcaToolsTrigger implements INodeType {
 		subtitle: '={{$parameter["event"]}}',
 		description: 'Starts a workflow when an e-invoice or note is issued',
 		defaults: { name: 'ZATCA Tools Trigger' },
-		usableAsTool: true,
 		polling: true,
 		inputs: [],
 		outputs: [NodeConnectionTypes.Main],
